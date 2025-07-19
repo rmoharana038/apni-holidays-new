@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Navigation } from "@/components/navigation";
@@ -17,7 +16,6 @@ export default function Packages() {
   const [packages, setPackages] = useState<any[]>([]);
   const [filteredPackages, setFilteredPackages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchParams] = useSearchParams();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [countryFilter, setCountryFilter] = useState("all");
@@ -28,18 +26,17 @@ export default function Packages() {
     AOS.init({ duration: 700, once: true });
   }, []);
 
+  // Manually extract query params
   useEffect(() => {
-    // Get filters from query params
-    const queryDestination = searchParams.get("destination") || "";
-    const queryCountry = searchParams.get("country") || "all";
-    const queryDuration = searchParams.get("duration") || "all";
-    const queryBudget = searchParams.get("budget") || "all";
+    const params = new URLSearchParams(window.location.search);
+    const destination = params.get("destination") || "";
+    const duration = params.get("duration") || "all";
+    const budget = params.get("budget") || "all";
 
-    setSearchTerm(queryDestination);
-    setCountryFilter(queryCountry);
-    setDurationFilter(queryDuration);
-    setPriceFilter(queryBudget);
-  }, [searchParams]);
+    setSearchTerm(destination);
+    setDurationFilter(duration);
+    setPriceFilter(budget);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -80,9 +77,9 @@ export default function Packages() {
     if (durationFilter !== "all") {
       filtered = filtered.filter((pkg) => {
         const duration = parseInt(pkg.duration);
-        if (durationFilter === "short") return duration <= 3;
-        if (durationFilter === "medium") return duration >= 4 && duration <= 7;
-        if (durationFilter === "long") return duration >= 8;
+        if (durationFilter === "3-5") return duration >= 3 && duration <= 5;
+        if (durationFilter === "6-10") return duration >= 6 && duration <= 10;
+        if (durationFilter === "10+") return duration > 10;
         return true;
       });
     }
@@ -90,9 +87,9 @@ export default function Packages() {
     if (priceFilter !== "all") {
       filtered = filtered.filter((pkg) => {
         const price = parseInt(pkg.price);
-        if (priceFilter === "budget") return price <= 30000;
-        if (priceFilter === "mid") return price > 30000 && price <= 70000;
-        if (priceFilter === "luxury") return price > 70000;
+        if (priceFilter === "under-50k") return price <= 50000;
+        if (priceFilter === "50k-100k") return price > 50000 && price <= 100000;
+        if (priceFilter === "100k+") return price > 100000;
         return true;
       });
     }
@@ -166,9 +163,9 @@ export default function Packages() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">Any Duration</SelectItem>
-                <SelectItem value="short">1-3 Days</SelectItem>
-                <SelectItem value="medium">4-7 Days</SelectItem>
-                <SelectItem value="long">8+ Days</SelectItem>
+                <SelectItem value="3-5">3-5 Days</SelectItem>
+                <SelectItem value="6-10">6-10 Days</SelectItem>
+                <SelectItem value="10+">10+ Days</SelectItem>
               </SelectContent>
             </Select>
 
@@ -177,10 +174,10 @@ export default function Packages() {
                 <SelectValue placeholder="Price Range" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Any Price</SelectItem>
-                <SelectItem value="budget">Under ₹30,000</SelectItem>
-                <SelectItem value="mid">₹30,000 - ₹70,000</SelectItem>
-                <SelectItem value="luxury">₹70,000+</SelectItem>
+                <SelectItem value="all">Any Budget</SelectItem>
+                <SelectItem value="under-50k">Under ₹50,000</SelectItem>
+                <SelectItem value="50k-100k">₹50,000 - ₹1,00,000</SelectItem>
+                <SelectItem value="100k+">₹1,00,000+</SelectItem>
               </SelectContent>
             </Select>
           </div>
