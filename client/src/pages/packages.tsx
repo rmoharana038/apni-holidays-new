@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { useState, useEffect } from "react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,6 +17,8 @@ export default function Packages() {
   const [packages, setPackages] = useState<any[]>([]);
   const [filteredPackages, setFilteredPackages] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchParams] = useSearchParams();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [countryFilter, setCountryFilter] = useState("all");
   const [durationFilter, setDurationFilter] = useState("all");
@@ -26,17 +29,28 @@ export default function Packages() {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
+    // Get filters from query params
+    const queryDestination = searchParams.get("destination") || "";
+    const queryCountry = searchParams.get("country") || "all";
+    const queryDuration = searchParams.get("duration") || "all";
+    const queryBudget = searchParams.get("budget") || "all";
 
+    setSearchTerm(queryDestination);
+    setCountryFilter(queryCountry);
+    setDurationFilter(queryDuration);
+    setPriceFilter(queryBudget);
+  }, [searchParams]);
+
+  useEffect(() => {
+    setLoading(true);
     const packagesRef = collection(db, "packages");
     const q = query(packagesRef, where("isActive", "==", true), orderBy("createdAt", "desc"));
 
     const unsubscribe = onSnapshot(
       q,
       (snapshot) => {
-        const packagesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setPackages(packagesData);
-        setFilteredPackages(packagesData);
+        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setPackages(data);
         setLoading(false);
       },
       (error) => {
@@ -49,7 +63,7 @@ export default function Packages() {
   }, []);
 
   useEffect(() => {
-    let filtered = packages;
+    let filtered = [...packages];
 
     if (searchTerm) {
       filtered = filtered.filter((pkg) =>
@@ -66,32 +80,20 @@ export default function Packages() {
     if (durationFilter !== "all") {
       filtered = filtered.filter((pkg) => {
         const duration = parseInt(pkg.duration);
-        switch (durationFilter) {
-          case "short":
-            return duration <= 3;
-          case "medium":
-            return duration >= 4 && duration <= 7;
-          case "long":
-            return duration >= 8;
-          default:
-            return true;
-        }
+        if (durationFilter === "short") return duration <= 3;
+        if (durationFilter === "medium") return duration >= 4 && duration <= 7;
+        if (durationFilter === "long") return duration >= 8;
+        return true;
       });
     }
 
     if (priceFilter !== "all") {
       filtered = filtered.filter((pkg) => {
         const price = parseInt(pkg.price);
-        switch (priceFilter) {
-          case "budget":
-            return price <= 30000;
-          case "mid":
-            return price > 30000 && price <= 70000;
-          case "luxury":
-            return price > 70000;
-          default:
-            return true;
-        }
+        if (priceFilter === "budget") return price <= 30000;
+        if (priceFilter === "mid") return price > 30000 && price <= 70000;
+        if (priceFilter === "luxury") return price > 70000;
+        return true;
       });
     }
 
@@ -153,9 +155,7 @@ export default function Packages() {
               <SelectContent>
                 <SelectItem value="all">All Countries</SelectItem>
                 {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
+                  <SelectItem key={country} value={country}>{country}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -193,7 +193,6 @@ export default function Packages() {
           </p>
         </div>
 
-        {/* Package Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPackages.map((pkg, index) => (
             <Card
