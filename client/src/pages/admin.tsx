@@ -29,6 +29,62 @@ import { useLocation } from "wouter";
 
 export default function Admin() {
   const [, setLocation] = useLocation();
+  const { isAuthenticated, isAdmin, loading: authLoading } = useAuth();
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  const [selectedTab, setSelectedTab] = useState("packages");
+
+  const handleTabChange = (value: string) => setSelectedTab(value);
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg font-semibold mb-2">Checking Admin Access</div>
+          <Spinner size="lg" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated || !isAdmin) {
+    return null;
+  }
+
+  return (
+    <div className="bg-slate-50 min-h-screen">
+      {/* Top Navigation */}
+      <AdminTopNav />
+
+      {/* Tabs */}
+      <div className="container mx-auto px-4 py-6">
+        <Tabs value={selectedTab} onValueChange={handleTabChange} className="w-full">
+          <TabsList className="mb-6 flex justify-center gap-4 bg-white p-2 rounded-lg shadow-md">
+            <TabsTrigger
+              value="packages"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white px-4 py-2 rounded-md"
+            >
+              Manage Packages
+            </TabsTrigger>
+            <TabsTrigger
+              value="users"
+              className="data-[state=active]:bg-blue-600 data-[state=active]:text-white px-4 py-2 rounded-md"
+            >
+              Manage Users
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="packages">
+            <PackageManagementTab />
+          </TabsContent>
+          <TabsContent value="users">
+            <UserManagementTab />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+}
   const { userProfile, isAuthenticated, isAdmin, loading: authLoading } = useAuth();
   const { toast } = useToast();
   const [packages, setPackages] = useState<any[]>([]);
@@ -50,7 +106,33 @@ export default function Admin() {
     isInternational: true,
     isActive: true
   });
+if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
+          <p className="mt-4 text-slate-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
+  if (!isAuthenticated || !isAdmin) {
+    return null;
+  }
+
+  return (
+    <div className="bg-slate-50 min-h-screen">
+      {/* Navigation */}
+      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo and Brand */}
+            <div className="flex items-center">
+              <Plane className="text-blue-500 text-2xl mr-3" />
+              <span className="text-2xl font-bold text-slate-800">Apni Holidays</span>
+              <span className="ml-3 px-2 py-1 bg-blue-500 text-white text-xs rounded-full">Admin</span>
+            </div>
   useEffect(() => {
     if (!authLoading && (!isAuthenticated || !isAdmin)) {
       setLocation('/');
@@ -691,35 +773,7 @@ const useAuth = () => {
     });
     setLocation('/');
   };
-
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500 mx-auto"></div>
-          <p className="mt-4 text-slate-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated || !isAdmin) {
-    return null;
-  }
-
-  return (
-    <div className="bg-slate-50 min-h-screen">
-      {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo and Brand */}
-            <div className="flex items-center">
-              <Plane className="text-blue-500 text-2xl mr-3" />
-              <span className="text-2xl font-bold text-slate-800">Apni Holidays</span>
-              <span className="ml-3 px-2 py-1 bg-blue-500 text-white text-xs rounded-full">Admin</span>
-            </div>
-            
+  
             {/* User Profile */}
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
