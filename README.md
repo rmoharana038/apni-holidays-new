@@ -36,31 +36,29 @@
 ## 🗂 Project Structure
 
 ```
-apni-holidays-new/
-├── client/                   # Frontend (React + Vite)
-│   ├── index.html
-│   └── src/
-│       ├── App.tsx
-│       ├── main.tsx
-│       ├── index.css
-│       ├── components/       # Reusable and UI components (ShadCN)
-│       ├── hooks/            # Custom React hooks
-│       ├── lib/              # Firebase and utility logic
-│       └── pages/            # Page-level components
-├── server/                   # Server-side logic
-│   ├── db.ts                 # Drizzle DB config
-│   ├── index.ts              # Server entry point
-│   ├── routes.ts             # API endpoints
-│   ├── storage.ts            # File/image storage setup
-│   └── vite.ts               # Server config for Vite
-├── shared/
-│   └── schema.ts             # Shared DB schema
-├── drizzle.config.ts         # Drizzle ORM setup
-├── tailwind.config.ts        # Tailwind customization
-├── vite.config.ts            # Vite bundler setup
-├── tsconfig.json             # TypeScript config
-├── .env.example              # Env variables template
-└── package.json              # Dependencies and scripts
+.
+├── client                  # Frontend (React + TS)
+│   ├── src
+│   │   ├── components      # All reusable + custom UI components
+│   │   ├── hooks           # Custom React hooks
+│   │   ├── lib             # Firebase, QueryClient, utils
+│   │   ├── pages           # Page-based routing (admin, home, profile, etc.)
+│   │   └── index.css       # Global styles
+│   └── index.html
+│
+├── server                 # Express backend
+│   ├── routes.ts          # API routes
+│   ├── db.ts              # Drizzle ORM + schema
+│   ├── storage.ts         # Firebase storage handling
+│   └── vite.ts            # Vite SSR (if needed)
+│
+├── shared/schema.ts       # Shared DB schema across client & server
+├── .env.example            # Environment config template
+├── drizzle.config.ts       # Drizzle ORM config
+├── tailwind.config.ts      # Tailwind config
+├── tsconfig.json           # TypeScript config
+└── README.md
+
 ```
 
 ---
