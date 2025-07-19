@@ -234,9 +234,11 @@ export default function Packages() {
                         </span>
                       )}
                     </div>
-                    <Button className="travel-blue text-white">
-                      Book Now
-                    </Button>
+                    <a href={`/package/${pkg.id}`}>
+  <Button className="travel-blue text-white">
+    View Details
+  </Button>
+</a>
                   </div>
                 </div>
               </CardContent>
