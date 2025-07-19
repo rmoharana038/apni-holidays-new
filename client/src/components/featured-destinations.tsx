@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin } from "lucide-react";
+import { Star } from "lucide-react";
 import { getPackages } from "@/lib/firebase";
 import { Link } from "wouter";
 
@@ -14,7 +14,7 @@ export function FeaturedDestinations() {
     const fetchPackages = async () => {
       try {
         const packagesData = await getPackages();
-        setPackages(packagesData.slice(0, 6)); // Show only first 6 packages
+        setPackages(packagesData.slice(0, 6));
       } catch (error) {
         console.error("Error fetching packages:", error);
       } finally {
@@ -25,90 +25,13 @@ export function FeaturedDestinations() {
     fetchPackages();
   }, []);
 
-  const defaultPackages = [
-    {
-      id: "thailand",
-      title: "Thailand Explorer",
-      destination: "Bangkok & Phuket",
-      country: "Thailand",
-      duration: 5,
-      price: "45000",
-      originalPrice: "55000",
-      rating: "4.8",
-      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "18% OFF"
-    },
-    {
-      id: "dubai",
-      title: "Dubai Explorer",
-      destination: "City of Gold",
-      country: "UAE",
-      duration: 4,
-      price: "65000",
-      originalPrice: "78000",
-      rating: "4.9",
-      imageUrl: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "17% OFF"
-    },
-    {
-      id: "bali",
-      title: "Bali Adventure",
-      destination: "Island Paradise",
-      country: "Indonesia",
-      duration: 6,
-      price: "52000",
-      originalPrice: "60000",
-      rating: "4.7",
-      imageUrl: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "13% OFF"
-    },
-    {
-      id: "singapore",
-      title: "Singapore Highlights",
-      destination: "Lion City",
-      country: "Singapore",
-      duration: 4,
-      price: "58000",
-      originalPrice: "68000",
-      rating: "4.8",
-      imageUrl: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "15% OFF"
-    },
-    {
-      id: "kerala",
-      title: "God's Own Country",
-      destination: "Backwaters & Hills",
-      country: "India",
-      duration: 5,
-      price: "25000",
-      originalPrice: "30000",
-      rating: "4.6",
-      imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "17% OFF"
-    },
-    {
-      id: "rajasthan",
-      title: "Royal Rajasthan",
-      destination: "Land of Kings",
-      country: "India",
-      duration: 7,
-      price: "35000",
-      originalPrice: "42000",
-      rating: "4.7",
-      imageUrl: "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
-      discount: "17% OFF"
-    }
-  ];
-
-  const displayPackages = packages.length > 0 ? packages : defaultPackages;
-
   if (loading) {
     return (
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Featured Destinations</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Discover our most popular international and domestic travel packages</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Discover our most popular travel packages</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
@@ -129,12 +52,12 @@ export function FeaturedDestinations() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Featured International Destinations</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Discover amazing international destinations from India with our carefully curated travel packages</p>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Explore amazing international destinations from India with our curated travel packages</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayPackages.map((pkg) => (
-            <Card key={pkg.id} className="group cursor-pointer transform hover:scale-105 transition-all duration-300 overflow-hidden">
+          {packages.map((pkg) => (
+            <Card key={pkg.id} className="group transform hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer">
               <div className="relative">
                 <img 
                   src={pkg.imageUrl} 
@@ -150,7 +73,7 @@ export function FeaturedDestinations() {
                       <span className="text-white font-medium">{pkg.rating}</span>
                     </div>
                   </div>
-                  <p className="text-gray-200 mb-3">{pkg.duration} Days {pkg.destination}</p>
+                  <p className="text-gray-200 mb-3">{pkg.duration} Days – {pkg.destination}</p>
                   <div className="flex items-center justify-between mb-3">
                     <div className="text-white">
                       <span className="text-lg font-bold">₹{parseInt(pkg.price).toLocaleString()}</span>
@@ -161,15 +84,11 @@ export function FeaturedDestinations() {
                       )}
                     </div>
                     {pkg.discount && (
-                      <Badge className="tropical-green text-white">
-                        {pkg.discount}
-                      </Badge>
+                      <Badge className="tropical-green text-white">{pkg.discount}</Badge>
                     )}
                   </div>
-                  <Link href={`/packages#${pkg.id}`}>
-                    <Button className="mt-2 w-full travel-blue text-white">
-                      View Details
-                    </Button>
+                  <Link href={`/packages/${pkg.id}`}>
+                    <Button className="mt-2 w-full travel-blue text-white">View Details</Button>
                   </Link>
                 </div>
               </div>
