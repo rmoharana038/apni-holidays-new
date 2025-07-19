@@ -1,19 +1,17 @@
-// client/src/components/ui/search-bar.tsx
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Input } from "./input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
 import { Button } from "./button";
 
 export function SearchBar() {
   const navigate = useNavigate();
 
-  const [destination, setDestination] = useState("");
-  const [country, setCountry] = useState("");
-  const [duration, setDuration] = useState("");
-  const [budget, setBudget] = useState("");
+  const [destination, setDestination] = useState("all");
+  const [country, setCountry] = useState("all");
+  const [duration, setDuration] = useState("all");
+  const [budget, setBudget] = useState("all");
 
   const [packages, setPackages] = useState<any[]>([]);
 
@@ -32,55 +30,62 @@ export function SearchBar() {
 
   const handleSearch = () => {
     const params = new URLSearchParams();
-    if (destination) params.append("destination", destination);
-    if (country) params.append("country", country);
-    if (duration) params.append("duration", duration);
-    if (budget) params.append("budget", budget);
+    if (destination !== "all") params.append("destination", destination);
+    if (country !== "all") params.append("country", country);
+    if (duration !== "all") params.append("duration", duration);
+    if (budget !== "all") params.append("budget", budget);
     navigate(`/packages?${params.toString()}`);
   };
 
   return (
     <div className="bg-white p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4 justify-center items-center mt-6 mx-4 md:mx-16">
-      <Select onValueChange={setDestination}>
+      <Select value={destination} onValueChange={setDestination}>
         <SelectTrigger className="w-full md:w-48">
           <SelectValue placeholder="Destination" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="all">All Destinations</SelectItem>
           {getUniqueValues("destination").map((value) => (
             <SelectItem key={value} value={value}>{value}</SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select onValueChange={setCountry}>
+      <Select value={country} onValueChange={setCountry}>
         <SelectTrigger className="w-full md:w-48">
           <SelectValue placeholder="Country" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="all">All Countries</SelectItem>
           {getUniqueValues("country").map((value) => (
             <SelectItem key={value} value={value}>{value}</SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select onValueChange={setDuration}>
+      <Select value={duration} onValueChange={setDuration}>
         <SelectTrigger className="w-full md:w-48">
           <SelectValue placeholder="Duration (days)" />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="all">Any Duration</SelectItem>
           {getUniqueValues("duration").map((value) => (
             <SelectItem key={value} value={value.toString()}>{value} days</SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Input
-        placeholder="Budget (INR)"
-        type="number"
-        className="w-full md:w-48"
-        value={budget}
-        onChange={(e) => setBudget(e.target.value)}
-      />
+      <Select value={budget} onValueChange={setBudget}>
+        <SelectTrigger className="w-full md:w-48">
+          <SelectValue placeholder="Budget" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Any Budget</SelectItem>
+          <SelectItem value="budget">Under ₹30,000</SelectItem>
+          <SelectItem value="mid">₹30,000 - ₹70,000</SelectItem>
+          <SelectItem value="luxury">₹70,000+</SelectItem>
+        </SelectContent>
+      </Select>
 
       <Button onClick={handleSearch} className="w-full md:w-auto">
         Search
