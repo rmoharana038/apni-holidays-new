@@ -1,9 +1,14 @@
-import { SearchBar } from "@/components/ui/search-bar";
+import { SearchBar } from "@/components/SearchBar"; // ✅ Corrected import path
 
 export function HeroSection() {
   const handleSearch = (filters: any) => {
-    console.log("Search filters:", filters);
-    // TODO: Implement search functionality
+    const query = new URLSearchParams();
+
+    if (filters.destination) query.set("destination", filters.destination.toString());
+    if (filters.duration && filters.duration !== "any") query.set("duration", filters.duration.toString());
+    if (filters.budget && filters.budget !== "any") query.set("budget", filters.budget.toString());
+
+    window.location.href = `/packages?${query.toString()}`;
   };
 
   return (
@@ -20,7 +25,7 @@ export function HeroSection() {
 
       <div className="relative z-10 flex items-center justify-center h-full">
         <div
-          className="text-center max-w-4xl mx-auto px-4"
+          className="text-center max-w-4xl mx-auto px-4 w-full"
           data-aos="fade-up"
           data-aos-delay="200"
         >
@@ -33,7 +38,7 @@ export function HeroSection() {
             amazing destinations from India
           </p>
 
-          <div data-aos="fade-up" data-aos-delay="400">
+          <div data-aos="fade-up" data-aos-delay="400" className="max-w-4xl mx-auto">
             <SearchBar onSearch={handleSearch} />
           </div>
         </div>
