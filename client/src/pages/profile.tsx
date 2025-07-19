@@ -11,6 +11,8 @@ import { useAuth } from "@/hooks/use-auth";
 import { updateUserProfile } from "@/lib/firebase";
 import { User, Camera, Save, Mail, Phone } from "lucide-react";
 import { useLocation } from "wouter";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Profile() {
   const [, setLocation] = useLocation();
@@ -23,6 +25,10 @@ export default function Profile() {
     phone: '',
     photoUrl: ''
   });
+
+  useEffect(() => {
+    AOS.init({ duration: 800 });
+  }, []);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -48,7 +54,6 @@ export default function Profile() {
     }));
   };
 
-  // Upload image to imgbb.com via API
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file || !user) return;
@@ -56,13 +61,11 @@ export default function Profile() {
     try {
       setLoading(true);
 
-      // Read file as base64
       const base64 = await new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const result = reader.result;
           if (typeof result === 'string') {
-            // Remove the prefix (data:image/xxx;base64,) before sending to imgbb
             const base64Data = result.split(',')[1];
             resolve(base64Data);
           } else {
@@ -73,7 +76,6 @@ export default function Profile() {
         reader.readAsDataURL(file);
       });
 
-      // Upload to imgbb
       const apiKey = 'ee4ff6776bc42710da45f222b0f15592';
       const form = new FormData();
       form.append('key', apiKey);
@@ -90,7 +92,7 @@ export default function Profile() {
 
       const data = await response.json();
 
-      if (data && data.data && data.data.url) {
+      if (data?.data?.url) {
         setFormData(prev => ({
           ...prev,
           photoUrl: data.data.url
@@ -165,21 +167,19 @@ export default function Profile() {
     );
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (!isAuthenticated) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
 
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="mb-8">
+        <div className="mb-8" data-aos="fade-up">
           <h1 className="text-3xl font-bold text-gray-900 font-inter">My Profile</h1>
           <p className="text-gray-600 mt-2">Manage your account settings and preferences</p>
         </div>
 
-        <Card>
+        <Card data-aos="fade-up" data-aos-delay="100">
           <CardHeader>
             <CardTitle className="flex items-center">
               <User className="mr-2 h-5 w-5" />
@@ -188,8 +188,7 @@ export default function Profile() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Profile Photo */}
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-4" data-aos="fade-up" data-aos-delay="200">
                 <Avatar className="w-20 h-20">
                   <AvatarImage src={formData.photoUrl} alt="Profile" />
                   <AvatarFallback>
@@ -214,8 +213,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Name */}
-              <div className="space-y-2">
+              <div className="space-y-2" data-aos="fade-up" data-aos-delay="300">
                 <Label htmlFor="name">Full Name</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -230,8 +228,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Email */}
-              <div className="space-y-2">
+              <div className="space-y-2" data-aos="fade-up" data-aos-delay="350">
                 <Label htmlFor="email">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -247,8 +244,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Phone */}
-              <div className="space-y-2">
+              <div className="space-y-2" data-aos="fade-up" data-aos-delay="400">
                 <Label htmlFor="phone">Phone Number</Label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -268,6 +264,8 @@ export default function Profile() {
                 type="submit"
                 disabled={loading}
                 className="w-full travel-blue text-white"
+                data-aos="fade-up"
+                data-aos-delay="450"
               >
                 <Save className="mr-2 h-4 w-4" />
                 {loading ? 'Saving...' : 'Save Changes'}
@@ -276,8 +274,7 @@ export default function Profile() {
           </CardContent>
         </Card>
 
-        {/* Account Info */}
-        <Card className="mt-6">
+        <Card className="mt-6" data-aos="fade-up" data-aos-delay="500">
           <CardHeader>
             <CardTitle>Account Information</CardTitle>
           </CardHeader>
@@ -286,7 +283,9 @@ export default function Profile() {
               <div className="flex items-center justify-between py-2 border-b">
                 <span className="text-gray-600">Account Created</span>
                 <span className="font-medium">
-                  {userProfile?.createdAt ? new Date(userProfile.createdAt.seconds * 1000).toLocaleDateString() : 'N/A'}
+                  {userProfile?.createdAt
+                    ? new Date(userProfile.createdAt.seconds * 1000).toLocaleDateString()
+                    : 'N/A'}
                 </span>
               </div>
               <div className="flex items-center justify-between py-2 border-b">
