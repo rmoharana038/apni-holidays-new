@@ -16,7 +16,7 @@ export function FeaturedDestinations() {
         const packagesData = await getPackages();
         setPackages(packagesData.slice(0, 6)); // Show only first 6 packages
       } catch (error) {
-        console.error('Error fetching packages:', error);
+        console.error("Error fetching packages:", error);
       } finally {
         setLoading(false);
       }
@@ -27,76 +27,76 @@ export function FeaturedDestinations() {
 
   const defaultPackages = [
     {
-      id: 'thailand',
-      title: 'Thailand Explorer',
-      destination: 'Bangkok & Phuket',
-      country: 'Thailand',
+      id: "thailand",
+      title: "Thailand Explorer",
+      destination: "Bangkok & Phuket",
+      country: "Thailand",
       duration: 5,
-      price: '45000',
-      originalPrice: '55000',
-      rating: '4.8',
-      imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '18% OFF'
+      price: "45000",
+      originalPrice: "55000",
+      rating: "4.8",
+      imageUrl: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "18% OFF"
     },
     {
-      id: 'dubai',
-      title: 'Dubai Explorer',
-      destination: 'City of Gold',
-      country: 'UAE',
+      id: "dubai",
+      title: "Dubai Explorer",
+      destination: "City of Gold",
+      country: "UAE",
       duration: 4,
-      price: '65000',
-      originalPrice: '78000',
-      rating: '4.9',
-      imageUrl: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '17% OFF'
+      price: "65000",
+      originalPrice: "78000",
+      rating: "4.9",
+      imageUrl: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "17% OFF"
     },
     {
-      id: 'bali',
-      title: 'Bali Adventure',
-      destination: 'Island Paradise',
-      country: 'Indonesia',
+      id: "bali",
+      title: "Bali Adventure",
+      destination: "Island Paradise",
+      country: "Indonesia",
       duration: 6,
-      price: '52000',
-      originalPrice: '60000',
-      rating: '4.7',
-      imageUrl: 'https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '13% OFF'
+      price: "52000",
+      originalPrice: "60000",
+      rating: "4.7",
+      imageUrl: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "13% OFF"
     },
     {
-      id: 'singapore',
-      title: 'Singapore Highlights',
-      destination: 'Lion City',
-      country: 'Singapore',
+      id: "singapore",
+      title: "Singapore Highlights",
+      destination: "Lion City",
+      country: "Singapore",
       duration: 4,
-      price: '58000',
-      originalPrice: '68000',
-      rating: '4.8',
-      imageUrl: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '15% OFF'
+      price: "58000",
+      originalPrice: "68000",
+      rating: "4.8",
+      imageUrl: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "15% OFF"
     },
     {
-      id: 'kerala',
-      title: 'God\'s Own Country',
-      destination: 'Backwaters & Hills',
-      country: 'India',
+      id: "kerala",
+      title: "God's Own Country",
+      destination: "Backwaters & Hills",
+      country: "India",
       duration: 5,
-      price: '25000',
-      originalPrice: '30000',
-      rating: '4.6',
-      imageUrl: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '17% OFF'
+      price: "25000",
+      originalPrice: "30000",
+      rating: "4.6",
+      imageUrl: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "17% OFF"
     },
     {
-      id: 'rajasthan',
-      title: 'Royal Rajasthan',
-      destination: 'Land of Kings',
-      country: 'India',
+      id: "rajasthan",
+      title: "Royal Rajasthan",
+      destination: "Land of Kings",
+      country: "India",
       duration: 7,
-      price: '35000',
-      originalPrice: '42000',
-      rating: '4.7',
-      imageUrl: 'https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600',
-      discount: '17% OFF'
+      price: "35000",
+      originalPrice: "42000",
+      rating: "4.7",
+      imageUrl: "https://images.unsplash.com/photo-1518623489648-a173ef7824f3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600",
+      discount: "17% OFF"
     }
   ];
 
@@ -151,7 +151,7 @@ export function FeaturedDestinations() {
                     </div>
                   </div>
                   <p className="text-gray-200 mb-3">{pkg.duration} Days {pkg.destination}</p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-3">
                     <div className="text-white">
                       <span className="text-lg font-bold">₹{parseInt(pkg.price).toLocaleString()}</span>
                       {pkg.originalPrice && (
@@ -166,6 +166,11 @@ export function FeaturedDestinations() {
                       </Badge>
                     )}
                   </div>
+                  <Link href={`/packages#${pkg.id}`}>
+                    <Button className="mt-2 w-full travel-blue text-white">
+                      View Details
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </Card>
