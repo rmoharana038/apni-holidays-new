@@ -1,151 +1,158 @@
-# Apni Holidays - Travel Booking Platform
+# 🌍 Apni Holidays - Travel Booking Platform
 
-A modern travel booking platform specializing in international destinations from India including Thailand, Dubai, Bali, Singapore, Maldives, Turkey, and more.
-
-## Features
-
-- **Modern Responsive Design**: Works perfectly on mobile and desktop
-- **Firebase Authentication**: Email/password and Google sign-in
-- **International Travel Packages**: Detailed packages with itineraries, inclusions, and exclusions
-- **Admin Panel**: Manage packages, users, and bookings
-- **Search & Filter**: Find packages by destination, price, duration
-- **User Profiles**: Manage personal information and bookings
-- **Database Storage**: PostgreSQL with type-safe Drizzle ORM
-
-## Tech Stack
-
-- **Frontend**: React 18 with TypeScript
-- **Backend**: Express.js with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM
-- **Authentication**: Firebase Auth
-- **Storage**: Firebase Storage (for images)
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **Build Tool**: Vite
-- **State Management**: TanStack Query
-
-## Quick Start
-
-1. **Install Dependencies**
-   ```bash
-   npm install
-   ```
-
-2. **Set Up Firebase**
-   - Go to [Firebase Console](https://console.firebase.google.com/)
-   - Create a new project
-   - Enable Authentication (Email/Password and Google)
-   - Enable Firestore Database
-   - Enable Storage
-   - Get your Firebase config values
-
-3. **Database Setup**
-   - Set up PostgreSQL database
-   - Add DATABASE_URL to your environment variables
-   - Run database migrations:
-   ```bash
-   npm run db:push
-   ```
-
-4. **Environment Setup**
-   Create a `.env` file in the root directory:
-   ```
-   DATABASE_URL=your_postgresql_connection_string
-   VITE_FIREBASE_API_KEY=your_api_key_here
-   VITE_FIREBASE_APP_ID=your_app_id_here
-   VITE_FIREBASE_PROJECT_ID=your_project_id_here
-   ```
-
-5. **Run the Application**
-   ```bash
-   npm run dev
-   ```
-
-6. **Access the Application**
-   - Open your browser to `http://localhost:5000`
-   - The application will be running with both frontend and backend
-
-## Project Structure
-
-```
-apni-holidays/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom hooks
-│   │   └── lib/            # Utilities and Firebase config
-├── server/                 # Express backend
-│   ├── index.ts           # Server entry point
-│   ├── routes.ts          # API routes
-│   ├── storage.ts         # Database storage layer
-│   └── db.ts             # Database configuration
-├── shared/                 # Shared types and schemas
-└── package.json           # Dependencies and scripts
-```
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run db:push` - Push database schema (if using PostgreSQL)
-
-## Admin Access
-
-To access the admin panel:
-1. Create an account or sign in
-2. You'll need to manually set `isAdmin: true` in the Firebase user document
-3. Access `/admin` to manage packages
-
-## Sample Data
-
-The application comes with sample international travel packages including:
-- Thailand Paradise (Bangkok & Phuket)
-- Dubai Luxury Experience
-- Bali Island Paradise
-- Singapore Highlights
-- Maldives Honeymoon Special
-- Turkey Cultural Journey
-
-## Firebase Setup Instructions
-
-1. **Create Firebase Project**
-   - Go to https://console.firebase.google.com/
-   - Click "Add project"
-   - Follow the setup wizard
-
-2. **Enable Authentication**
-   - Go to Authentication > Sign-in method
-   - Enable Email/Password
-   - Enable Google (add your domain to authorized domains)
-
-3. **Set up Firestore**
-   - Go to Firestore Database
-   - Click "Create database"
-   - Choose "Start in test mode"
-
-4. **Configure Storage**
-   - Go to Storage
-   - Click "Get started"
-   - Use default security rules for development
-
-5. **Get Configuration**
-   - Go to Project Settings
-   - Scroll to "Your apps"
-   - Copy the Firebase config values
-
-## Deployment
-
-For production deployment:
-1. Set environment variables on your hosting platform
-2. Run `npm run build`
-3. Deploy the built files
-4. Update Firebase authorized domains
-
-## Support
-
-For support or questions about this travel booking platform, please contact the development team.
+Welcome to **Apni Holidays**, a modern travel booking platform specializing in international holiday packages. This repository contains a full-stack web application built with React, TypeScript, Vite, Drizzle ORM, ShadCN UI, and Tailwind CSS.
 
 ---
 
-Built with ❤️ for Apni Holidays, Raipur, India
+## ✈️ Features
+
+- ⚡ **Beautiful UI**: Modern, fully responsive design
+- 🌏 **International Packages**: Thailand, Dubai, Bali, Singapore, Maldives, Turkey, and more
+- 🔍 **Advanced Search**: Quickly find packages by destination, price, or duration
+- 📝 **User Authentication**: Secure login & registration (with Firebase Auth)
+- 👤 **Profile & Bookings**: Manage your bookings and preferences
+- 🛠️ **Admin Panel**: Manage packages, users, and bookings (admin only)
+- ☁️ **Image Storage**: Package photos stored in Firebase Storage
+- 🧪 **Testing**: E2E tests with Cypress
+
+---
+
+## 🏗️ Project Structure
+
+apni-holidays-new-main/
+├── .env
+├── .env.example
+├── .gitignore
+├── README.md
+├── components.json
+├── cypress.config.cjs
+├── drizzle.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+├── vite.config.ts
+└── client/
+├── index.html
+└── src/
+├── App.tsx
+├── index.css
+├── main.tsx
+└── components/
+├── auth-modal.tsx
+├── featured-destinations.tsx
+├── footer.tsx
+├── hero-section.tsx
+├── navigation.tsx
+├── why-choose-us.tsx
+└── ui/
+├── button.tsx
+├── card.tsx
+├── modal.tsx
+└── ...
+
+text
+
+---
+
+## ⚙️ Tech Stack
+
+- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, ShadCN UI
+- **Backend**: Express.js (TypeScript)
+- **Database**: PostgreSQL, Drizzle ORM
+- **Authentication**: Firebase Auth
+- **Storage**: Firebase Storage
+- **Testing**: Cypress
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone Repository
+
+git clone https://github.com/rmoharana038/apni-holidays-new.git
+cd apni-holidays-new-main
+
+text
+
+### 2. Install Dependencies
+
+npm install
+
+text
+
+### 3. Config Environment Variables
+
+- Copy `.env.example` to `.env` and add your credentials for **Firebase**, **PostgreSQL**, etc.
+
+### 4. Firebase Setup
+
+- Create a [Firebase project](https://console.firebase.google.com/)
+- Enable **Email/Password & Google Auth**
+- Enable **Firestore/Realtime Database** and **Storage**
+- Update `.env` with your Firebase configuration
+
+### 5. Database Setup
+
+npm run db:push
+
+text
+
+### 6. Running the App
+
+npm run dev
+
+text
+
+### 7. Building for Production
+
+npm run build
+
+text
+
+---
+
+## 🧪 Running Tests
+
+npx cypress open
+
+text
+_or_
+npx cypress run
+
+text
+
+---
+
+## 👨‍💼 Admin Access
+
+- To promote a user as admin, set `isAdmin: true` in Firebase Auth or database manually.
+- Visit `/admin` route for admin panel.
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create your feature branch (`git checkout -b feature-x`)
+3. Commit your changes (`git commit -am 'Add feature x'`)
+4. Push to the branch (`git push origin feature-x`)
+5. Create a new Pull Request
+
+---
+
+## 📄 License
+
+[MIT License](LICENSE)
+
+---
+
+## 📬 Contact
+
+For queries, support or feedback contact:  
+[apniholidays@yourmail.com](mailto:apniholidays@yourmail.com)
+
+---
+
+> Happy Travels from the **Apni Holidays** Team! 🎒
