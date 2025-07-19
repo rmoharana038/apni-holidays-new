@@ -5,7 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-// ✅ AOS (Animate on Scroll)
+// AOS setup
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -51,6 +51,7 @@ function ScrollToTopOnRouteChange() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
+    AOS.refresh(); // Refresh AOS on route change
   }, [location]);
 
   return null;
@@ -70,12 +71,11 @@ function Router() {
 }
 
 function App() {
-  // ✅ AOS init (on first render only)
   useEffect(() => {
     AOS.init({
       duration: 800,
-      once: true, // only animate once
-      easing: "ease-in-out",
+      once: true,
+      offset: 100,
     });
   }, []);
 
