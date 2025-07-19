@@ -33,8 +33,9 @@ function BackToTopButton() {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 bg-travel-blue text-white p-3 rounded-full shadow-lg z-50 hover:bg-blue-700 transition"
+      className="fixed bottom-6 right-6 bg-blue-600 text-white text-xl font-bold p-4 rounded-full shadow-xl z-50 hover:bg-blue-700 transition duration-300"
       aria-label="Back to top"
+      style={{ border: "2px solid white" }}
     >
       ↑
     </button>
