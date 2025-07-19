@@ -52,15 +52,15 @@ export function Footer() {
             <div className="space-y-2 text-gray-400">
               <div className="flex items-center">
                 <MapPin className="h-4 w-4 mr-2" />
-                <span>Raipur, Chhattisgarh, India</span>
+                <span>Apni Holidays, Ring Road No-1, Behind Maruti Showroom Bhatagaon, Raipur, Chhattisgarh, 492013, India</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-4 w-4 mr-2" />
-                <span>+91 98765 43210</span>
+                <span>+91 91790 84999</span>
               </div>
               <div className="flex items-center">
                 <Mail className="h-4 w-4 mr-2" />
-                <span>info@apniholidays.com</span>
+                <span>﻿﻿apniholidays@gmail.com﻿</span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
