@@ -2,7 +2,7 @@ import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock } fro
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-16">
+    <footer id="footer" className="bg-gray-900 text-white py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -39,8 +39,8 @@ export function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#footer" className="hover:text-white transition-colors">About Us</a></li>
+              <li><a href="#footer" className="hover:text-white transition-colors">Contact</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
               <li><a href="#" className="hover:text-white transition-colors">Cancellation Policy</a></li>
