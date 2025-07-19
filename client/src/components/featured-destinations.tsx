@@ -64,10 +64,12 @@ export function FeaturedDestinations() {
                   alt={pkg.title}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6">
+                {/* Darker gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-shadow">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-2xl font-bold text-white">{pkg.country}</h3>
+                    <h3 className="text-2xl font-bold text-white">{pkg.title}</h3>
                     <div className="flex items-center text-yellow-400">
                       <Star className="h-4 w-4 mr-1 fill-current" />
                       <span className="text-white font-medium">{pkg.rating}</span>
