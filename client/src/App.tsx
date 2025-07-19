@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -13,19 +13,24 @@ import Admin from "@/pages/admin";
 import NotFound from "@/pages/not-found";
 import PackageDetails from "@/pages/package/[id]";
 
-// Back to Top Button
 function BackToTopButton() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setVisible(window.scrollY > 300);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => {
+      setVisible(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-  return visible ? (
+  if (!visible) return null;
+
+  return (
     <button
       onClick={scrollToTop}
       className="fixed bottom-6 right-6 bg-travel-blue text-white p-3 rounded-full shadow-lg z-50 hover:bg-blue-700 transition"
@@ -33,7 +38,7 @@ function BackToTopButton() {
     >
       ↑
     </button>
-  ) : null;
+  );
 }
 
 function ScrollToTopOnRouteChange() {
