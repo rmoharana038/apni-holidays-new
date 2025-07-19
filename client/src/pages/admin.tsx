@@ -877,4 +877,3 @@ const useAuth = () => {
       </footer>
     </div>
   );
-}
