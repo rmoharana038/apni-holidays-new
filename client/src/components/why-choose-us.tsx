@@ -44,20 +44,36 @@ export function WhyChooseUs() {
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Why Choose Apni Holidays?</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">We make your dream vacation a reality with our expertise and personalized service</p>
+        <div
+          className="text-center mb-16"
+          data-aos="fade-up"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">
+            Why Choose Apni Holidays?
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            We make your dream vacation a reality with our expertise and personalized service
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-white hover:shadow-xl transition-shadow duration-300">
+            <Card
+              key={index}
+              className="bg-white hover:shadow-xl transition-shadow duration-300"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
               <CardContent className="p-8">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
-                  feature.color === 'travel-blue' ? 'bg-[var(--travel-blue)]' :
-                  feature.color === 'sunset-orange' ? 'bg-[var(--sunset-orange)]' :
-                  'bg-[var(--tropical-green)]'
-                }`}>
+                <div
+                  className={`w-16 h-16 rounded-full flex items-center justify-center mb-6 ${
+                    feature.color === 'travel-blue'
+                      ? 'bg-[var(--travel-blue)]'
+                      : feature.color === 'sunset-orange'
+                      ? 'bg-[var(--sunset-orange)]'
+                      : 'bg-[var(--tropical-green)]'
+                  }`}
+                >
                   <feature.icon className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{feature.title}</h3>
