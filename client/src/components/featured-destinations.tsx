@@ -87,7 +87,7 @@ export function FeaturedDestinations() {
                       <Badge className="tropical-green text-white">{pkg.discount}</Badge>
                     )}
                   </div>
-                  <Link href={`/packages/${pkg.id}`}>
+                  <Link href={`/package/${pkg.id}`}>
                     <Button className="mt-2 w-full travel-blue text-white">View Details</Button>
                   </Link>
                 </div>
