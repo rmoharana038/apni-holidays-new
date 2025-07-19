@@ -1,5 +1,5 @@
 import { collection, query, where, orderBy, onSnapshot } from "firebase/firestore";
-import { db } from "@/lib/firebase"; // If not imported already
+import { db } from "@/lib/firebase";
 import { useState, useEffect } from "react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Star, MapPin, Clock, Users, Search, Filter } from "lucide-react";
-import { getPackages } from "@/lib/firebase";
+import { Star, MapPin, Clock, Users, Search } from "lucide-react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 export default function Packages() {
   const [packages, setPackages] = useState<any[]>([]);
@@ -21,32 +22,37 @@ export default function Packages() {
   const [priceFilter, setPriceFilter] = useState("all");
 
   useEffect(() => {
-  setLoading(true);
+    AOS.init({ duration: 700, once: true });
+  }, []);
 
-  // Firestore reference and query
-  const packagesRef = collection(db, 'packages');
-  const q = query(packagesRef, where('isActive', '==', true), orderBy('createdAt', 'desc'));
+  useEffect(() => {
+    setLoading(true);
 
-  // Real-time listener
-  const unsubscribe = onSnapshot(q, (snapshot) => {
-    const packagesData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-    setPackages(packagesData);
-    setFilteredPackages(packagesData);
-    setLoading(false);
-  }, (error) => {
-    console.error("Error fetching packages:", error);
-    setLoading(false);
-  });
+    const packagesRef = collection(db, "packages");
+    const q = query(packagesRef, where("isActive", "==", true), orderBy("createdAt", "desc"));
 
-  // Cleanup on unmount
-  return () => unsubscribe();
-}, []);
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const packagesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        setPackages(packagesData);
+        setFilteredPackages(packagesData);
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error fetching packages:", error);
+        setLoading(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     let filtered = packages;
 
     if (searchTerm) {
-      filtered = filtered.filter(pkg => 
+      filtered = filtered.filter((pkg) =>
         pkg.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         pkg.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
         pkg.country.toLowerCase().includes(searchTerm.toLowerCase())
@@ -54,29 +60,37 @@ export default function Packages() {
     }
 
     if (countryFilter !== "all") {
-      filtered = filtered.filter(pkg => pkg.country === countryFilter);
+      filtered = filtered.filter((pkg) => pkg.country === countryFilter);
     }
 
     if (durationFilter !== "all") {
-      filtered = filtered.filter(pkg => {
+      filtered = filtered.filter((pkg) => {
         const duration = parseInt(pkg.duration);
         switch (durationFilter) {
-          case "short": return duration <= 3;
-          case "medium": return duration >= 4 && duration <= 7;
-          case "long": return duration >= 8;
-          default: return true;
+          case "short":
+            return duration <= 3;
+          case "medium":
+            return duration >= 4 && duration <= 7;
+          case "long":
+            return duration >= 8;
+          default:
+            return true;
         }
       });
     }
 
     if (priceFilter !== "all") {
-      filtered = filtered.filter(pkg => {
+      filtered = filtered.filter((pkg) => {
         const price = parseInt(pkg.price);
         switch (priceFilter) {
-          case "budget": return price <= 30000;
-          case "mid": return price > 30000 && price <= 70000;
-          case "luxury": return price > 70000;
-          default: return true;
+          case "budget":
+            return price <= 30000;
+          case "mid":
+            return price > 30000 && price <= 70000;
+          case "luxury":
+            return price > 70000;
+          default:
+            return true;
         }
       });
     }
@@ -84,7 +98,7 @@ export default function Packages() {
     setFilteredPackages(filtered);
   }, [packages, searchTerm, countryFilter, durationFilter, priceFilter]);
 
-  const countries = [...new Set(packages.map(pkg => pkg.country))];
+  const countries = [...new Set(packages.map((pkg) => pkg.country))];
 
   if (loading) {
     return (
@@ -112,15 +126,15 @@ export default function Packages() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="mb-12">
+        <div className="mb-12 text-center" data-aos="fade-down">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Holiday Packages</h1>
           <p className="text-xl text-gray-600">Discover amazing destinations around the world</p>
         </div>
 
         {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8" data-aos="zoom-in">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -131,15 +145,17 @@ export default function Packages() {
                 className="pl-10"
               />
             </div>
-            
+
             <Select value={countryFilter} onValueChange={setCountryFilter}>
               <SelectTrigger>
                 <SelectValue placeholder="All Countries" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Countries</SelectItem>
-                {countries.map(country => (
-                  <SelectItem key={country} value={country}>{country}</SelectItem>
+                {countries.map((country) => (
+                  <SelectItem key={country} value={country}>
+                    {country}
+                  </SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -171,7 +187,7 @@ export default function Packages() {
         </div>
 
         {/* Results */}
-        <div className="mb-6">
+        <div className="mb-6" data-aos="fade-up">
           <p className="text-gray-600">
             Showing {filteredPackages.length} of {packages.length} packages
           </p>
@@ -179,11 +195,16 @@ export default function Packages() {
 
         {/* Package Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPackages.map((pkg) => (
-            <Card key={pkg.id} className="group overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          {filteredPackages.map((pkg, index) => (
+            <Card
+              key={pkg.id}
+              className="group overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
               <div className="relative">
-                <img 
-                  src={pkg.imageUrl} 
+                <img
+                  src={pkg.imageUrl}
                   alt={pkg.title}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -194,7 +215,7 @@ export default function Packages() {
                   </Badge>
                 </div>
               </div>
-              
+
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <div>
@@ -207,7 +228,7 @@ export default function Packages() {
                   <Badge variant="outline">{pkg.country}</Badge>
                 </div>
               </CardHeader>
-              
+
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-sm text-gray-600">
@@ -220,9 +241,9 @@ export default function Packages() {
                       <span>For All Ages</span>
                     </div>
                   </div>
-                  
+
                   <p className="text-gray-600 text-sm line-clamp-2">{pkg.description}</p>
-                  
+
                   <div className="flex items-center justify-between pt-3 border-t">
                     <div>
                       <span className="text-2xl font-bold text-gray-900">
@@ -235,10 +256,8 @@ export default function Packages() {
                       )}
                     </div>
                     <a href={`/package/${pkg.id}`}>
-  <Button className="travel-blue text-white">
-    View Details
-  </Button>
-</a>
+                      <Button className="travel-blue text-white">View Details</Button>
+                    </a>
                   </div>
                 </div>
               </CardContent>
@@ -247,9 +266,9 @@ export default function Packages() {
         </div>
 
         {filteredPackages.length === 0 && (
-          <div className="text-center py-12">
+          <div className="text-center py-12" data-aos="fade-in">
             <p className="text-gray-500 text-lg">No packages found matching your criteria.</p>
-            <Button 
+            <Button
               onClick={() => {
                 setSearchTerm("");
                 setCountryFilter("all");
@@ -264,7 +283,7 @@ export default function Packages() {
           </div>
         )}
       </div>
-      
+
       <Footer />
     </div>
   );
