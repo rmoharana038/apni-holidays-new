@@ -29,9 +29,16 @@ export function FeaturedDestinations() {
     return (
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Featured Destinations</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Discover our most popular travel packages</p>
+          <div
+            className="text-center mb-16"
+            data-aos="fade-up"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">
+              Featured Destinations
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Discover our most popular travel packages
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (
@@ -50,23 +57,34 @@ export function FeaturedDestinations() {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">Featured International Destinations</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">Explore amazing international destinations from India with our curated travel packages</p>
+        <div
+          className="text-center mb-16"
+          data-aos="fade-up"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 font-inter">
+            Featured International Destinations
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Explore amazing international destinations from India with our curated travel packages
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
-            <Card key={pkg.id} className="group transform hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer">
+          {packages.map((pkg, index) => (
+            <Card
+              key={pkg.id}
+              className="group transform hover:scale-105 transition-all duration-300 overflow-hidden cursor-pointer"
+              data-aos="zoom-in"
+              data-aos-delay={index * 100}
+            >
               <div className="relative">
-                <img 
-                  src={pkg.imageUrl} 
+                <img
+                  src={pkg.imageUrl}
                   alt={pkg.title}
                   className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
                 />
-                {/* Darker gradient overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
-                
+
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-shadow">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="text-2xl font-bold text-white">{pkg.title}</h3>
@@ -98,7 +116,7 @@ export function FeaturedDestinations() {
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="200">
           <Link href="/packages">
             <Button className="travel-blue text-white px-8 py-3 text-lg font-semibold">
               View All Packages
