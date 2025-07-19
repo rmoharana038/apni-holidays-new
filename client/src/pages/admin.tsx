@@ -657,11 +657,6 @@ const useAuth = () => {
   };
 };
 
-export default function Admin() {
-  const [, setLocation] = useLocation();
-  const { userProfile, isAuthenticated, isAdmin, loading: authLoading } = useAuth();
-  const { toast } = useToast();
-
   useEffect(() => {
     if (!authLoading && (!isAuthenticated || !isAdmin)) {
       setLocation('/');
