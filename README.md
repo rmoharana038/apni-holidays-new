@@ -1,158 +1,94 @@
-# 🌍 Apni Holidays - Travel Booking Platform
+# Apni Holidays 🏖️
 
-Welcome to **Apni Holidays**, a modern travel booking platform specializing in international holiday packages. This repository contains a full-stack web application built with React, TypeScript, Vite, Drizzle ORM, ShadCN UI, and Tailwind CSS.
-
----
-
-## ✈️ Features
-
-- ⚡ **Beautiful UI**: Modern, fully responsive design
-- 🌏 **International Packages**: Thailand, Dubai, Bali, Singapore, Maldives, Turkey, and more
-- 🔍 **Advanced Search**: Quickly find packages by destination, price, or duration
-- 📝 **User Authentication**: Secure login & registration (with Firebase Auth)
-- 👤 **Profile & Bookings**: Manage your bookings and preferences
-- 🛠️ **Admin Panel**: Manage packages, users, and bookings (admin only)
-- ☁️ **Image Storage**: Package photos stored in Firebase Storage
-- 🧪 **Testing**: E2E tests with Cypress
+A modern travel booking website built using React (Vite), Tailwind CSS, Firebase, and Drizzle ORM.
 
 ---
 
-## 🏗️ Project Structure
+## 📁 Project Structure
 
+```
 apni-holidays-new-main/
-├── .env
-├── .env.example
-├── .gitignore
-├── README.md
-├── components.json
-├── cypress.config.cjs
-├── drizzle.config.ts
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── tailwind.config.ts
-├── tsconfig.json
-├── vite.config.ts
-└── client/
-├── index.html
-└── src/
-├── App.tsx
-├── index.css
-├── main.tsx
-└── components/
-├── auth-modal.tsx
-├── featured-destinations.tsx
-├── footer.tsx
-├── hero-section.tsx
-├── navigation.tsx
-├── why-choose-us.tsx
-└── ui/
-├── button.tsx
-├── card.tsx
-├── modal.tsx
-└── ...
-
-text
+├── .env.example            # Sample environment variables
+├── client/
+│   ├── index.html          # Main HTML file
+│   └── src/
+│       ├── App.tsx         # Root React component
+│       ├── main.tsx        # Entry point
+│       ├── index.css       # Tailwind styles
+│       └── components/     # Custom + UI components
+│           └── ui/         # ShadCN UI components
+├── drizzle.config.ts       # Drizzle ORM configuration
+├── tailwind.config.ts      # Tailwind config
+├── vite.config.ts          # Vite bundler config
+├── tsconfig.json           # TypeScript configuration
+└── package.json            # Project dependencies
+```
 
 ---
 
-## ⚙️ Tech Stack
+## 🚀 Features
 
-- **Frontend**: React 18, TypeScript, Vite, Tailwind CSS, ShadCN UI
-- **Backend**: Express.js (TypeScript)
-- **Database**: PostgreSQL, Drizzle ORM
-- **Authentication**: Firebase Auth
-- **Storage**: Firebase Storage
-- **Testing**: Cypress
+- 🔐 Firebase Auth with role-based access control
+- ☁️ Firestore integration for dynamic data (packages, users, etc.)
+- ✨ Modern UI using Tailwind + ShadCN
+- 🧠 Clean project structure using reusable components
+- 🧪 Cypress testing setup
+- 🛠️ Drizzle ORM for clean backend DB schema
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Getting Started
 
-### 1. Clone Repository
+### 1. Clone the repo
 
+```bash
 git clone https://github.com/rmoharana038/apni-holidays-new.git
-cd apni-holidays-new-main
+cd apni-holidays-new/client
+```
 
-text
+### 2. Install dependencies
 
-### 2. Install Dependencies
-
+```bash
 npm install
+```
 
-text
+### 3. Set up Firebase
 
-### 3. Config Environment Variables
+Create a `.env` file in the root (based on `.env.example`) and fill in Firebase project credentials.
 
-- Copy `.env.example` to `.env` and add your credentials for **Firebase**, **PostgreSQL**, etc.
+```env
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+...
+```
 
-### 4. Firebase Setup
+### 4. Run the development server
 
-- Create a [Firebase project](https://console.firebase.google.com/)
-- Enable **Email/Password & Google Auth**
-- Enable **Firestore/Realtime Database** and **Storage**
-- Update `.env` with your Firebase configuration
-
-### 5. Database Setup
-
-npm run db:push
-
-text
-
-### 6. Running the App
-
+```bash
 npm run dev
-
-text
-
-### 7. Building for Production
-
-npm run build
-
-text
+```
 
 ---
 
 ## 🧪 Running Tests
 
+```bash
 npx cypress open
-
-text
-_or_
-npx cypress run
-
-text
+```
 
 ---
 
-## 👨‍💼 Admin Access
+## 🧱 Built With
 
-- To promote a user as admin, set `isAdmin: true` in Firebase Auth or database manually.
-- Visit `/admin` route for admin panel.
-
----
-
-## 🤝 Contributing
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feature-x`)
-3. Commit your changes (`git commit -am 'Add feature x'`)
-4. Push to the branch (`git push origin feature-x`)
-5. Create a new Pull Request
+- [React + Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Firebase Auth + Firestore](https://firebase.google.com/)
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [ShadCN UI](https://ui.shadcn.dev/)
+- [Cypress](https://www.cypress.io/)
 
 ---
 
 ## 📄 License
 
-[MIT License](LICENSE)
-
----
-
-## 📬 Contact
-
-For queries, support or feedback contact:  
-[apniholidays@yourmail.com](mailto:apniholidays@yourmail.com)
-
----
-
-> Happy Travels from the **Apni Holidays** Team! 🎒
+MIT © [rmoharana038](https://github.com/rmoharana038)
