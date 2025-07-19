@@ -135,7 +135,7 @@ export default function Admin() {
 
       editingPackage ? await updatePackage(editingPackage.id, pkg) : await createPackage(pkg);
 
-      toast({ title: "Success", description: \`Package \${editingPackage ? "updated" : "created"}.\` });
+      toast({ title: "Success", description: "Package " + (editingPackage ? "updated" : "created") + "." });
       setIsModalOpen(false);
       setEditingPackage(null);
       resetForm();
