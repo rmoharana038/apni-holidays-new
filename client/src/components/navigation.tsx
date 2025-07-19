@@ -36,7 +36,7 @@ export function Navigation() {
                 <p className="text-xs text-gray-500 font-medium">Raipur, India</p>
               </Link>
             </div>
-            
+
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
                 <Link href="/" className="text-gray-900 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
@@ -45,12 +45,12 @@ export function Navigation() {
                 <Link href="/packages" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   Packages
                 </Link>
-                <Link href="/about" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
+                <a href="#footer" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   About Us
-                </Link>
-                <Link href="/contact" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
+                </a>
+                <a href="#footer" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   Contact
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -111,12 +111,12 @@ export function Navigation() {
               <Link href="/packages" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
                 Packages
               </Link>
-              <Link href="/about" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
+              <a href="#footer" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
                 About Us
-              </Link>
-              <Link href="/contact" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
+              </a>
+              <a href="#footer" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
                 Contact
-              </Link>
+              </a>
               {isAuthenticated ? (
                 <>
                   <Link href="/profile" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
