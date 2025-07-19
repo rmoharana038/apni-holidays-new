@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, LogIn, UserPlus, User, Settings } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
@@ -10,7 +10,8 @@ export function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
-  const { user, userProfile, isAuthenticated, isAdmin } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
+  const [location, navigate] = useLocation();
 
   const handleAuthClick = (mode: 'login' | 'signup') => {
     setAuthMode(mode);
@@ -25,32 +26,43 @@ export function Navigation() {
     }
   };
 
+  const scrollToFooter = () => {
+    const footer = document.getElementById("footer");
+    if (footer) footer.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleHomeClick = () => {
+    if (location === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <>
       <nav className="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Link href="/" className="flex-shrink-0">
-                <h1 className="text-2xl font-bold text-travel-blue font-inter">Apni Holidays</h1>
-                <p className="text-xs text-gray-500 font-medium">Raipur, India</p>
-              </Link>
+            <div className="flex items-center cursor-pointer" onClick={handleHomeClick}>
+              <h1 className="text-2xl font-bold text-travel-blue font-inter">Apni Holidays</h1>
+              <p className="text-xs text-gray-500 font-medium">Raipur, India</p>
             </div>
 
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-8">
-                <Link href="/" className="text-gray-900 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
+                <span onClick={handleHomeClick} className="cursor-pointer text-gray-900 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   Home
-                </Link>
+                </span>
                 <Link href="/packages" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   Packages
                 </Link>
-                <a href="#footer" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
+                <span onClick={scrollToFooter} className="cursor-pointer text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   About Us
-                </a>
-                <a href="#footer" className="text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
+                </span>
+                <span onClick={scrollToFooter} className="cursor-pointer text-gray-500 hover:text-travel-blue px-3 py-2 text-sm font-medium transition-colors">
                   Contact
-                </a>
+                </span>
               </div>
             </div>
 
@@ -90,33 +102,28 @@ export function Navigation() {
             </div>
 
             <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
+              <Button variant="ghost" size="sm" onClick={() => setIsMenuOpen(!isMenuOpen)}>
                 {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
-              <Link href="/" className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-travel-blue">
+              <span onClick={handleHomeClick} className="block px-3 py-2 text-base font-medium text-gray-900 hover:text-travel-blue cursor-pointer">
                 Home
-              </Link>
+              </span>
               <Link href="/packages" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
                 Packages
               </Link>
-              <a href="#footer" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
+              <span onClick={scrollToFooter} className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue cursor-pointer">
                 About Us
-              </a>
-              <a href="#footer" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
+              </span>
+              <span onClick={scrollToFooter} className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue cursor-pointer">
                 Contact
-              </a>
+              </span>
               {isAuthenticated ? (
                 <>
                   <Link href="/profile" className="block px-3 py-2 text-base font-medium text-gray-500 hover:text-travel-blue">
