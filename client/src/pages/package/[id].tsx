@@ -38,11 +38,23 @@ export default function PackageDetails() {
   }, [id]);
 
   if (loading) {
-    return <div className="min-h-screen bg-white"><Navigation /><div className="text-center py-20 text-gray-500 text-xl">Loading...</div><Footer /></div>;
+    return (
+      <div className="min-h-screen bg-white">
+        <Navigation />
+        <div className="text-center py-20 text-gray-500 text-xl">Loading...</div>
+        <Footer />
+      </div>
+    );
   }
 
   if (!pkg) {
-    return <div className="min-h-screen bg-white"><Navigation /><div className="text-center py-20 text-gray-500 text-xl">Package not found.</div><Footer /></div>;
+    return (
+      <div className="min-h-screen bg-white">
+        <Navigation />
+        <div className="text-center py-20 text-gray-500 text-xl">Package not found.</div>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -50,19 +62,38 @@ export default function PackageDetails() {
       <Navigation />
 
       <div className="max-w-6xl mx-auto px-4 py-12">
-        <img src={pkg.imageUrl} alt={pkg.title} className="w-full h-96 object-cover rounded-xl mb-8" />
+        <img
+          src={pkg.imageUrl}
+          alt={pkg.title}
+          className="w-full h-96 object-cover rounded-xl mb-8"
+          data-aos="fade-up"
+        />
 
-        <h1 className="text-4xl font-bold text-gray-900 mb-4 font-inter">{pkg.title}</h1>
-        <div className="flex flex-wrap items-center gap-4 text-gray-600 mb-6">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4 font-inter" data-aos="fade-right">
+          {pkg.title}
+        </h1>
+        <div
+          className="flex flex-wrap items-center gap-4 text-gray-600 mb-6"
+          data-aos="fade-right"
+          data-aos-delay="100"
+        >
           <Badge>{pkg.country}</Badge>
-          <span className="flex items-center gap-1"><MapPin className="h-4 w-4" /> {pkg.destination}</span>
-          <span className="flex items-center gap-1"><Clock className="h-4 w-4" /> {pkg.duration} Days</span>
-          <span className="flex items-center gap-1 text-yellow-500"><Star className="h-4 w-4 fill-current" /> {pkg.rating}</span>
+          <span className="flex items-center gap-1">
+            <MapPin className="h-4 w-4" /> {pkg.destination}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock className="h-4 w-4" /> {pkg.duration} Days
+          </span>
+          <span className="flex items-center gap-1 text-yellow-500">
+            <Star className="h-4 w-4 fill-current" /> {pkg.rating}
+          </span>
         </div>
 
-        <p className="text-lg text-gray-700 mb-6">{pkg.description}</p>
+        <p className="text-lg text-gray-700 mb-6" data-aos="fade-up" data-aos-delay="150">
+          {pkg.description}
+        </p>
 
-        <div className="mb-8">
+        <div className="mb-8" data-aos="fade-up" data-aos-delay="200">
           <h2 className="text-2xl font-semibold text-gray-900 mb-2">Itinerary</h2>
           <ul className="list-disc list-inside text-gray-700">
             {pkg.itinerary?.map((day: string, i: number) => (
@@ -71,7 +102,7 @@ export default function PackageDetails() {
           </ul>
         </div>
 
-        <div className="mb-8 grid md:grid-cols-2 gap-6">
+        <div className="mb-8 grid md:grid-cols-2 gap-6" data-aos="fade-up" data-aos-delay="250">
           <div>
             <h2 className="text-2xl font-semibold text-gray-900 mb-2">Inclusions</h2>
             <ul className="space-y-1">
@@ -95,7 +126,11 @@ export default function PackageDetails() {
           </div>
         </div>
 
-        <div className="flex items-center justify-between py-6 border-t border-b mb-6">
+        <div
+          className="flex items-center justify-between py-6 border-t border-b mb-6"
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
           <div>
             <p className="text-3xl font-bold text-gray-900">
               ₹{parseInt(pkg.price).toLocaleString()}
