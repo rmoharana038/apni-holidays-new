@@ -35,6 +35,13 @@ export default function Admin() {
   const [selectedTab, setSelectedTab] = useState("packages");
 
   const handleTabChange = (value: string) => setSelectedTab(value);
+  
+  useEffect(() => {
+    if (!authLoading && (!isAuthenticated || !isAdmin)) {
+      setLocation('/');
+      return;
+    }
+  }, [isAuthenticated, isAdmin, authLoading, setLocation]);
 
   if (authLoading) {
     return (
@@ -738,13 +745,6 @@ const useAuth = () => {
     }
   };
 };
-
-  useEffect(() => {
-    if (!authLoading && (!isAuthenticated || !isAdmin)) {
-      setLocation('/');
-      return;
-    }
-  }, [isAuthenticated, isAdmin, authLoading, setLocation]);
 
   // Fetch dashboard stats
   const { data: userStats } = useQuery<UserStats>({
