@@ -5,6 +5,10 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
+// ✅ AOS (Animate on Scroll)
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 // Pages
 import Home from "@/pages/home";
 import Packages from "@/pages/packages";
@@ -66,6 +70,15 @@ function Router() {
 }
 
 function App() {
+  // ✅ AOS init (on first render only)
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true, // only animate once
+      easing: "ease-in-out",
+    });
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
