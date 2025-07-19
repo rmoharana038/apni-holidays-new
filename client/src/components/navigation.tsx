@@ -46,7 +46,6 @@ export function Navigation() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center cursor-pointer" onClick={handleHomeClick}>
               <h1 className="text-2xl font-bold text-travel-blue font-inter">Apni Holidays</h1>
-              <p className="text-xs text-gray-500 font-medium">Raipur, India</p>
             </div>
 
             <div className="hidden md:block">
