@@ -1,66 +1,90 @@
-// File: src/components/search-bar.tsx
-
-import React, { useEffect, useState } from "react";
+// client/src/components/ui/search-bar.tsx
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../lib/firebase"; // Adjust based on your path
+import { db } from "@/lib/firebase";
+import { Input } from "./input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
+import { Button } from "./button";
 
-export default function SearchBar({ onSearch }: { onSearch: (results: any[]) => void }) {
+export function SearchBar() {
+  const navigate = useNavigate();
+
+  const [destination, setDestination] = useState("");
+  const [country, setCountry] = useState("");
+  const [duration, setDuration] = useState("");
+  const [budget, setBudget] = useState("");
+
   const [packages, setPackages] = useState<any[]>([]);
-  const [filtered, setFiltered] = useState<any[]>([]);
-
-  const [filters, setFilters] = useState({
-    destination: "",
-    country: "",
-    duration: "",
-    budget: "",
-  });
 
   useEffect(() => {
     const fetchPackages = async () => {
-      const snapshot = await getDocs(collection(db, "packages"));
-      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const querySnapshot = await getDocs(collection(db, "packages"));
+      const data = querySnapshot.docs.map((doc) => doc.data());
       setPackages(data);
-      setFiltered(data);
     };
     fetchPackages();
   }, []);
 
-  const unique = (key: string) => [...new Set(packages.map(pkg => pkg[key]))];
+  const getUniqueValues = (key: string) => {
+    return [...new Set(packages.map((pkg) => pkg[key]).filter(Boolean))];
+  };
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    const newFilters = { ...filters, [name]: value };
-    setFilters(newFilters);
-
-    const result = packages.filter(pkg => {
-      return (!newFilters.destination || pkg.destination === newFilters.destination) &&
-             (!newFilters.country || pkg.country === newFilters.country) &&
-             (!newFilters.duration || String(pkg.duration) === newFilters.duration) &&
-             (!newFilters.budget || Number(pkg.price) <= Number(newFilters.budget));
-    });
-
-    setFiltered(result);
-    onSearch(result);
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (destination) params.append("destination", destination);
+    if (country) params.append("country", country);
+    if (duration) params.append("duration", duration);
+    if (budget) params.append("budget", budget);
+    navigate(`/packages?${params.toString()}`);
   };
 
   return (
-    <div className="bg-white rounded-xl shadow p-4 flex flex-wrap gap-4 items-center justify-between">
-      <select name="destination" value={filters.destination} onChange={handleChange} className="border rounded p-2 w-40">
-        <option value="">Destination</option>
-        {unique("destination").map(val => <option key={val} value={val}>{val}</option>)}
-      </select>
-      <select name="country" value={filters.country} onChange={handleChange} className="border rounded p-2 w-40">
-        <option value="">Country</option>
-        {unique("country").map(val => <option key={val} value={val}>{val}</option>)}
-      </select>
-      <select name="duration" value={filters.duration} onChange={handleChange} className="border rounded p-2 w-40">
-        <option value="">Duration (days)</option>
-        {unique("duration").map(val => <option key={val} value={val}>{val}</option>)}
-      </select>
-      <select name="budget" value={filters.budget} onChange={handleChange} className="border rounded p-2 w-40">
-        <option value="">Max Budget</option>
-        {[10000, 20000, 30000, 40000, 50000].map(val => <option key={val} value={val}>{`Up to ₹${val}`}</option>)}
-      </select>
+    <div className="bg-white p-4 rounded-lg shadow-lg flex flex-col md:flex-row gap-4 justify-center items-center mt-6 mx-4 md:mx-16">
+      <Select onValueChange={setDestination}>
+        <SelectTrigger className="w-full md:w-48">
+          <SelectValue placeholder="Destination" />
+        </SelectTrigger>
+        <SelectContent>
+          {getUniqueValues("destination").map((value) => (
+            <SelectItem key={value} value={value}>{value}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select onValueChange={setCountry}>
+        <SelectTrigger className="w-full md:w-48">
+          <SelectValue placeholder="Country" />
+        </SelectTrigger>
+        <SelectContent>
+          {getUniqueValues("country").map((value) => (
+            <SelectItem key={value} value={value}>{value}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select onValueChange={setDuration}>
+        <SelectTrigger className="w-full md:w-48">
+          <SelectValue placeholder="Duration (days)" />
+        </SelectTrigger>
+        <SelectContent>
+          {getUniqueValues("duration").map((value) => (
+            <SelectItem key={value} value={value.toString()}>{value} days</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Input
+        placeholder="Budget (INR)"
+        type="number"
+        className="w-full md:w-48"
+        value={budget}
+        onChange={(e) => setBudget(e.target.value)}
+      />
+
+      <Button onClick={handleSearch} className="w-full md:w-auto">
+        Search
+      </Button>
     </div>
   );
 }
